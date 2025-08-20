@@ -14,6 +14,7 @@ namespace Content.Scripts.Configs
         [Group("Type")][HideLabel][SerializeField][Dropdown(nameof(GetTypes))] private string type;
 
         [Group("Asset")][HideLabel][SerializeField] private AssetReferenceGameObject asset;
+        
         public Type Type => Type.GetType(type);
         public AssetReferenceGameObject Asset => asset;
 

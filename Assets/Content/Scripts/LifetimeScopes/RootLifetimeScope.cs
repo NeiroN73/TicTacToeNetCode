@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Scripts.Configs.Base;
 using Content.Scripts.Factories;
 using Content.Scripts.Services;
 using UnityEngine;
@@ -8,7 +9,7 @@ using VContainer.Unity;
 
 namespace Content.Scripts.Installer
 {
-    public class GameLifetimeScope : LifetimeScope
+    public class RootLifetimeScope : LifetimeScope
     {
         [SerializeField] private AssetLabelReference _configsAssetLabel;
 
@@ -38,10 +39,12 @@ namespace Content.Scripts.Installer
             Register<ViewModelFactory>();
             Register<ViewsFactory>();
             Register<ScreensFactory>();
+            Register<EntitiesFactory>();
         }
 
         private void RegisterServices()
         {
+            Register<AssetsLoaderService>();
             Register<ScreensService>();
             Register<ScenesService>();
             Register<AuthenticationsService>();

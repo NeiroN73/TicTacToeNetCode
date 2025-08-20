@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Scripts.Configs.Base;
 using Content.Scripts.UI.Base;
 using TriInspector;
 using UnityEngine;

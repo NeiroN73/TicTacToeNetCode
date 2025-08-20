@@ -39,28 +39,6 @@ namespace Content.Scripts.Services
     
             return newScreen;
         }
-        
-        public TScreen OpenSync<TScreen>() where TScreen : View
-        {
-            if (_screensByType.TryGetValue(typeof(TScreen), out var screen))
-            {
-                screen.Open();
-                _screensStack.Push(screen);
-                CurrentScreen = screen;
-                return (TScreen)screen;
-            }
-    
-            TScreen newScreen;
-
-            newScreen = _screensFactory.CreateSync<TScreen>();
-
-            newScreen.Open();
-            _screensByType.Add(typeof(TScreen), newScreen);
-            _screensStack.Push(newScreen);
-            CurrentScreen = newScreen;
-
-            return newScreen;
-        }
 
         public void OpenLoading<TScreen>() where TScreen : View
         {
@@ -73,13 +51,19 @@ namespace Content.Scripts.Services
                 _loadingScreen = _screensFactory.CreateSync<TScreen>();
                 _screensByType.Add(typeof(TScreen), _loadingScreen);
             }
-            
-            _loadingScreen.Open();
+
+            if (_loadingScreen)
+            {
+                _loadingScreen.Open();
+            }
         }
 
         public void CloseLoading()
         {
-            _loadingScreen.Close();
+            if (_loadingScreen)
+            {
+                _loadingScreen.Close();
+            }
         }
 
         public void Close()
@@ -94,33 +78,5 @@ namespace Content.Scripts.Services
                 }
             }
         }
-        
-        public void Close<TScreen>() where TScreen : View
-        {
-            if (_screensByType.TryGetValue(typeof(TScreen), out var screenToClose))
-            {
-                screenToClose.Close();
-                screenToClose.gameObject.SetActive(false);
-        
-                var screensList = new List<View>(_screensStack);
-                screensList.Remove(screenToClose);
-        
-                _screensStack.Clear();
-                for (int i = screensList.Count - 1; i >= 0; i--)
-                {
-                    _screensStack.Push(screensList[i]);
-                }
-            }
-        }
-    }
-
-    [Serializable]
-    public enum ScreenType
-    {
-        Primary,
-        Overlay,
-        Persistent,
-        Transient,
-        Loading
     }
 }

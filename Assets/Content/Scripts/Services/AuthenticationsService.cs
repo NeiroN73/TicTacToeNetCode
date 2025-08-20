@@ -41,6 +41,18 @@ namespace Content.Scripts.Services
                 Debug.LogException(ex);
             }
         }
+
+        public async UniTask TrySignInAnonymously()
+        {
+            if (UnityServices.State != ServicesInitializationState.Initialized)
+            {
+                await InitServices();
+            }
+            if (!AuthenticationService.Instance.IsAuthorized)
+            {
+                await SignInAnonymously();
+            }
+        }
         
         public async UniTask SignOut()
         {

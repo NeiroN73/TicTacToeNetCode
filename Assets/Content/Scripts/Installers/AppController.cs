@@ -1,18 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Scripts.Services;
-using Content.Scripts.UI.MainMenu;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
-namespace Content.Scripts.Installer
+namespace Content.Scripts.Installers
 {
-    //правильней было бы стейт машину инициализации сделать, но для тестового задания пойдет и такой вариант
     public class AppController : MonoBehaviour
     {
-        [SerializeField] private GameLifetimeScope _gameLifetimeScope;
-
         [Inject] private ScreensService _screensService;
 
         private IInitializable[] _initializables;
@@ -27,14 +22,12 @@ namespace Content.Scripts.Installer
 
         private void Awake()
         {
-            _gameLifetimeScope.Build();
+            DontDestroyOnLoad(this);
 
             foreach (var initializable in _initializables)
             {
                 initializable.Initialize();
             }
-
-            _screensService.OpenAsync<MainMenuScreen>().Forget();
         }
 
         private void Update()
