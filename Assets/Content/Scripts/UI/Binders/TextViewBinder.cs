@@ -14,9 +14,9 @@ namespace Content.Scripts.UI.Binders
 
         }
         
-        public override void Parse(string to)
+        public override void Parse(string value)
         {
-            _testText.text = to;
+            _testText.text = value;
         }
     }
 }

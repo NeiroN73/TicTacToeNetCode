@@ -1,4 +1,5 @@
-﻿using Content.Scripts.Factories;
+﻿using System;
+using Content.Scripts.Factories;
 using UnityEngine;
 using VContainer;
 
@@ -8,8 +9,9 @@ namespace Content.Scripts.UI.Base
         where TViewModel : ViewModel, new()
     {
         [Inject] private ViewModelFactory _viewModelFactory;
-        
-        protected TViewModel ViewModel;
+
+        private ViewBinder[] _viewBinders;
+        public TViewModel ViewModel { get; private set; }
         
         protected void Bind(params ViewBinder[] viewBinders)
         {
@@ -19,9 +21,17 @@ namespace Content.Scripts.UI.Base
                 viewBinder.Initialize();
             }
         }
+
+        public override void Dispose()
+        {
+            foreach (var viewBinder in _viewBinders)
+            {
+                viewBinder.Dispose();
+            }
+        }
     }
 
-    public abstract class View : MonoBehaviour
+    public abstract class View : MonoBehaviour, IDisposable
     {
         public abstract void Initialize();
         
@@ -33,6 +43,11 @@ namespace Content.Scripts.UI.Base
         public virtual void Close()
         {
             gameObject.SetActive(false);
+        }
+
+        public virtual void Dispose()
+        {
+            
         }
     }
 }

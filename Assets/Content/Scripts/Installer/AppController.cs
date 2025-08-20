@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Scripts.Services;
-using Content.Scripts.UI.Test;
+using Content.Scripts.UI.MainMenu;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
@@ -14,14 +15,14 @@ namespace Content.Scripts.Installer
 
         [Inject] private ScreensService _screensService;
 
-        private IReadOnlyList<IInitializable> _initializables;
-        private IReadOnlyList<ITickable> _tickables;
+        private IInitializable[] _initializables;
+        private ITickable[] _tickables;
 
         [Inject]
         private void Construct(IObjectResolver resolver)
         {
-            _initializables = resolver.Resolve<IEnumerable<IInitializable>>().ToList();
-            _tickables = resolver.Resolve<IEnumerable<ITickable>>().ToList();
+            _initializables = resolver.Resolve<IEnumerable<IInitializable>>().ToArray();
+            _tickables = resolver.Resolve<IEnumerable<ITickable>>().ToArray();
         }
 
         private void Awake()
@@ -32,8 +33,8 @@ namespace Content.Scripts.Installer
             {
                 initializable.Initialize();
             }
-            
-            _screensService.Open<TestScreen>();
+
+            _screensService.OpenAsync<MainMenuScreen>().Forget();
         }
 
         private void Update()

@@ -5,13 +5,12 @@ namespace Content.Scripts.UI
 {
     public class ViewModelBinder<TValue> : ViewModelBinder
     {
-        private TValue _value;
-        private ReactiveProperty<TValue> _onBinderTriggered = new();
+        protected TValue _value;
+        protected ReactiveProperty<TValue> _binderTriggered = new();
         private CompositeDisposable _disposable = new();
         
         public ViewModelBinder(string id) : base(id)
         {
-            _value = default;
         }
 
         public TValue Value
@@ -20,13 +19,13 @@ namespace Content.Scripts.UI
             set
             {
                 _value = value;
-                _onBinderTriggered.Value = value;
+                _binderTriggered.Value = value;
             }
         }
         
         public void SubscribeParse(Action<TValue> action)
         {
-            _onBinderTriggered.Subscribe(value => action?.Invoke(value)).AddTo(_disposable);
+            _binderTriggered.Subscribe(value => action?.Invoke(value)).AddTo(_disposable);
         }
 
         public void DisposeParse()
@@ -35,6 +34,15 @@ namespace Content.Scripts.UI
         }
     }
     
+    public class RefTypeViewModelBinder<TValue> : ViewModelBinder<TValue> where TValue : class, new()
+    {
+        public RefTypeViewModelBinder(string id) : base(id)
+        {
+            _value = new ();
+            _binderTriggered.Value = _value;
+        }
+    }
+
     public class ViewModelBinder
     {
         public string Id;

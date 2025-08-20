@@ -14,9 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Root>k__BackingField: {fileID: 589843485745076531, guid: 658074f7fc0585b49b71d6b7e4dc31ab, type: 3}
   _screens:
-  - type: Content.Scripts.UI.Test.TestScreen
+  - type: Content.Scripts.UI.MainMenu.MainMenuScreen
     asset:
-      m_AssetGUID: 2964f0f0bd3f6c9469c8921481302b7a
+      m_AssetGUID: a78a9a11931422c478615936b7398c3c
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - type: Content.Scripts.UI.Lobby.LobbyScreen
+    asset:
+      m_AssetGUID: 19c257f330a0c514c9c4d35166217e7e
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - type: Content.Scripts.UI.Loading.LoadingScreen
+    asset:
+      m_AssetGUID: c5ea4fb5f3690b143909bd5064b34a98
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 

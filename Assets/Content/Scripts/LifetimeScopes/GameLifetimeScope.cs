@@ -44,6 +44,8 @@ namespace Content.Scripts.Installer
         {
             Register<ScreensService>();
             Register<ScenesService>();
+            Register<AuthenticationsService>();
+            Register<LobbiesService>();
         }
         
         private void Register<T>() where T : class

@@ -1,8 +1,9 @@
 using System;
+using Object = UnityEngine.Object;
 
 namespace Content.Scripts.UI
 {
-    public abstract class ViewBinder<TViewModelValue> : ViewBinder, IDisposable
+    public abstract class ViewBinder<TViewModelValue> : ViewBinder
     {
         private ViewModelBinder<TViewModelValue> _viewModelBinder;
         
@@ -19,15 +20,15 @@ namespace Content.Scripts.UI
             }
         }
 
-        public abstract void Parse(TViewModelValue to);
+        public abstract void Parse(TViewModelValue value);
         
-        public void Dispose()
+        public override void Dispose()
         {
             _viewModelBinder.DisposeParse();
         }
     }
 
-    public abstract class ViewBinder
+    public abstract class ViewBinder : IDisposable
     {
         public ViewModelBinder ViewModelBinder;
         public string Id { get; private set; }
@@ -38,5 +39,9 @@ namespace Content.Scripts.UI
         }
 
         public abstract void Initialize();
+        public virtual void Dispose()
+        {
+            
+        }
     }
 }

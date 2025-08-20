@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using R3;
 
 namespace Content.Scripts.UI
 {
-    public abstract class ViewModel
+    public abstract class ViewModel : IDisposable
     {
         private Dictionary<string, ViewModelBinder> _viewModelBinders = new();
         public IReadOnlyDictionary<string, ViewModelBinder> ViewModelBinders => _viewModelBinders;
@@ -16,5 +17,10 @@ namespace Content.Scripts.UI
         }
 
         public abstract void Initialize();
+
+        public virtual void Dispose()
+        {
+            Disposable.Dispose();
+        }
     }
 }
