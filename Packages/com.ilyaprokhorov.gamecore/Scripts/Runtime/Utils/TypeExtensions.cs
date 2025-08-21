@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -39,17 +41,44 @@ namespace Content.Scripts.Utils
         
         public static string[] FilterTypes<TFilter>() where TFilter : class
         {
-            var assembly = AppDomain.CurrentDomain.GetAssemblies()
-                .First(x => x.FullName == "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
-
-            var filteredTypes = assembly.GetTypes()
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+    
+            var targetAssemblies = assemblies
+                .Where(x => x.GetTypes().Any(t => 
+                    x.FullName.StartsWith("Assembly-CSharp") || x.FullName.StartsWith("GameCore")));
+    
+            var filteredTypes = targetAssemblies
+                .SelectMany(assembly => assembly.GetTypes())
                 .Where(t => DefaultFilter(t, typeof(TFilter)))
                 .OrderBy(x => x.Name)
                 .ToList();
-
-            var typeNames = filteredTypes.Select(t => t.ReflectedType == null ? t.Name : $"{t.ReflectedType.Name}.{t.Name}")
+    
+            return filteredTypes.Select(t => 
+                    t.ReflectedType == null ? 
+                        t.FullName : 
+                        $"{t.ReflectedType.FullName}.{t.Name}")
                 .ToArray();
-            return filteredTypes.Select(t => t.FullName).ToArray();
+        }
+
+        public static Type GetType(string fullTypeName)
+        {
+            if (string.IsNullOrEmpty(fullTypeName))
+                return null;
+            
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var targetAssemblies = assemblies
+                .Where(x => x.GetTypes().Any(t => 
+                    x.FullName.StartsWith("Assembly-CSharp") || x.FullName.StartsWith("GameCore")));
+            foreach (var assembly in targetAssemblies)
+            {
+                var type = assembly.GetType(fullTypeName);
+                if (type != null)
+                {
+                    return type;
+                }
+            }
+
+            return default;
         }
         
         static bool DefaultFilter(Type type, Type filterType)

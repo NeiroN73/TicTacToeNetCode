@@ -15,7 +15,7 @@ namespace Content.Scripts.Configs
 
         [Group("Asset")][HideLabel][SerializeField] private AssetReferenceGameObject asset;
         
-        public Type Type => Type.GetType(type);
+        public Type Type => TypeExtensions.GetType(type);
         public AssetReferenceGameObject Asset => asset;
 
 #if UNITY_EDITOR

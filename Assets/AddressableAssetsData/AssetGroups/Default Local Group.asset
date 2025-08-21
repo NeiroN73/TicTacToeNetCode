@@ -15,11 +15,26 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 09c3fea6a3a2ee049a0c88bf2f6ab8ec
   m_SerializeEntries:
+  - m_GUID: 19c257f330a0c514c9c4d35166217e7e
+    m_Address: Assets/Content/Prefabs/Screens/LobbyScreen.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 65836d2e342647948834cddd76ecd2f1
+    m_Address: Assets/Content/Prefabs/Screens
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 76639344a236eb9428de0a6e5f7c6947
     m_Address: Assets/Content/Configs
     m_ReadOnly: 0
     m_SerializedLabels:
     - configs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a78a9a11931422c478615936b7398c3c
+    m_Address: Assets/Content/Prefabs/Screens/MainMenu.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e659896cb9920a64493136eecff37144
     m_Address: Assets/Content/Prefabs/Screens

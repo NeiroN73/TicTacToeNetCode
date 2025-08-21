@@ -1,0 +1,3 @@
+[submodule "Submodules/GameCore"]
+	path = Submodules/GameCore
+	url = https://github.com/NeiroN73/GameCoreForUnity.git
